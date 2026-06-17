@@ -1,0 +1,14 @@
+services:
+  fighter-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: pixel-fighter-server:latest
+    container_name: pixel-fighter-server
+    environment:
+      GAME_MODE: ${GAME_MODE:-online}
+      CPU_DIFFICULTY: ${CPU_DIFFICULTY:-normal}
+      INTERNAL_PORT: 5000
+    ports:
+      - "${FIGHTER_PORT:-5000}:5000"
+    restart: unless-stopped
