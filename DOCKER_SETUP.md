@@ -176,3 +176,26 @@ py client.py --server-ip 192.168.1.23 --port 6000 --mode-label "ONLINE JOIN"
 参加側に `0.0.0.0` や `127.0.0.1` を入力してはいけません。参加側はホストPCの `192.168.x.x` を使います。
 
 ---
+
+## GitHubに載せるときの推奨構成
+
+```text
+fighter_game/
+├ server.py
+├ client.py
+├ animation.py
+├ cpu_controller.py
+├ launcher.py
+├ Dockerfile
+├ docker-compose.yml
+├ docker_entrypoint.py
+├ .dockerignore
+├ .gitignore
+├ start_server_docker.bat
+├ start_cpu_server_docker.bat
+├ stop_server_docker.bat
+├ README.md
+└ assets/
+```
+
+`__pycache__`、`.venv`、`.zip` はGitに載せないでください。

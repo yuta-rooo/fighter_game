@@ -1,24 +1,9 @@
-# Python
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
-
-# virtual environment
+*.py[cod]
 .venv/
 venv/
 env/
-
-# editor
-.vscode/
-.idea/
-
-# OS
+.env
 .DS_Store
 Thumbs.db
-
-# archives
-*.zip
-
-# logs
 *.log

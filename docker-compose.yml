@@ -6,6 +6,8 @@ services:
     image: pixel-fighter-server:latest
     container_name: pixel-fighter-server
     environment:
+      # online: two human players connect with client.py
+      # cpu: one human player connects and 2P becomes CPU
       GAME_MODE: ${GAME_MODE:-online}
       CPU_DIFFICULTY: ${CPU_DIFFICULTY:-normal}
       INTERNAL_PORT: 5000

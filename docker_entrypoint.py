@@ -1,10 +1,12 @@
 from __future__ import annotations
+
 import os
 import subprocess
 import sys
 
 VALID_MODES = {"online", "cpu"}
 VALID_DIFFICULTIES = {"easy", "normal", "hard"}
+
 
 def main() -> None:
     mode = os.environ.get("GAME_MODE", "online").strip().lower()
@@ -36,6 +38,7 @@ def main() -> None:
 
     print("Starting server:", " ".join(command), flush=True)
     subprocess.run(command, check=True)
+
 
 if __name__ == "__main__":
     main()
