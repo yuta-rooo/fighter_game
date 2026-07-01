@@ -440,3 +440,6 @@ taskkill /PID 番号 /F
 * `assets/sprites/player2/`
 
 ---
+
+
+### サウンドの構成を加え修正しました。（6/19以降）
