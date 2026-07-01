@@ -236,6 +236,23 @@ def draw_text(text: str, x: int, y: int, font: pygame.font.Font, color: tuple[in
     image = font.render(text, True, color)
     screen.blit(image, image.get_rect(center=(x, y)))
 
+def draw_guard_gauge(x: int, y: int, value: Any, reverse: bool=False) -> None:
+    amount = max(0.0, min(100.0, float(value)))
+    width = 280
+    height = 10
+    fill = int(width * amount / 100.0)
+    pygame.draw.rect(screen, (20, 24, 36), (x, y, width, height), border_radius=4)
+    if reverse:
+        pygame.draw.rect(screen, CYAN, (x + width - fill, y, fill, height), border_radius=4)
+    else:
+        pygame.draw.rect(screen, CYAN, (x, y, fill, height), border_radius=4)
+    pygame.draw.rect(screen, WHITE, (x, y, width, height), 1, border_radius=4)
+    label = font_small.render('GUARD', True, WHITE)
+    if reverse:
+        screen.blit(label, (x + width - label.get_width(), y + 10))
+    else:
+        screen.blit(label, (x, y + 10))
+
 def draw_background(ox: int, oy: int) -> None:
     screen.fill((16, 20, 36))
     pygame.draw.circle(screen, (235, 228, 180), (785 + ox // 5, 88 + oy // 5), 42)
@@ -288,6 +305,8 @@ def draw_player(player: dict[str, Any], ox: int, oy: int) -> None:
         rect = body_rect(player).inflate(52, 32).move(ox, oy)
         pygame.draw.ellipse(screen, CYAN, rect, 4)
         pygame.draw.ellipse(screen, WHITE, rect.inflate(-12, -8), 2)
+    if str(player.get('state')) == 'GUARD_BREAK':
+        draw_arcade_text(screen, 'GUARD BREAK', (x + 25 + ox, int(float(player['y'])) - 32 + oy), font_small, YELLOW)
     if draw_hitboxes:
         draw_debug_hitboxes(player, ox, oy)
 
@@ -298,6 +317,8 @@ def draw_ui(state: dict[str, Any]) -> None:
     draw_arcade_bar(screen, WIDTH - 384, 26, int(p2['hp']), 100, BLUE, '2P', 350, 30, reverse=True)
     draw_arcade_bar(screen, 34, 67, int(p1['meter']), 100, PURPLE, 'SUPER', 280, 16, reverse=False)
     draw_arcade_bar(screen, WIDTH - 314, 67, int(p2['meter']), 100, PURPLE, 'SUPER', 280, 16, reverse=True)
+    draw_guard_gauge(34, 91, p1.get('guard_meter', 100), reverse=False)
+    draw_guard_gauge(WIDTH - 314, 91, p2.get('guard_meter', 100), reverse=True)
     draw_arcade_text(screen, str(p1['round_wins']), (395, 42), font_mid, YELLOW)
     draw_arcade_text(screen, str(p2['round_wins']), (565, 42), font_mid, YELLOW)
     if player_id is not None:
@@ -308,8 +329,8 @@ def draw_ui(state: dict[str, Any]) -> None:
         draw_text(f'CPU BATTLE - {str(difficulty).upper()}', WIDTH // 2, 84, font_small, CYAN)
     else:
         draw_text('ONLINE BATTLE', WIDTH // 2, 84, font_small, CYAN)
-    screen.blit(font_small.render('A/D move  W jump  S crouch  Q guard', True, WHITE), (32, 106))
-    screen.blit(font_small.render('F light  G heavy  H special  R rematch  B hitboxes', True, WHITE), (32, 132))
+    screen.blit(font_small.render('A/D move  W jump  S crouch  Q guard', True, WHITE), (32, 124))
+    screen.blit(font_small.render('F light  G heavy  H special  R rematch  B hitboxes', True, WHITE), (32, 150))
 
 def draw_game(state: dict[str, Any] | None) -> None:
     global camera_shake

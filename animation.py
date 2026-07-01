@@ -25,6 +25,8 @@ ANIMATION_CONFIG: dict[str, dict[str, int | bool | tuple[int, int]]] = {
 
     "HIT": {"frame_duration": 4, "loop": False, "offset": (0, 0)},
 
+    "GUARD_BREAK": {"frame_duration": 4, "loop": True, "offset": (0, 0)},
+
     "KO": {"frame_duration": 9, "loop": False, "offset": (0, 12)},
 
     "LIGHT": {"frame_duration": 3, "loop": False, "offset": (8, 0)},
